@@ -3,9 +3,11 @@ import pandas as pd
 from tensorflow.keras.models import load_model  # For loading Keras model
 
 
-model = load_model(r"C:/Users\ankur\Downloads\rainpred1.keras")
-
-
+try:
+    model = load_model("rainpred1.keras")
+    print("Model loaded successfully!")
+except Exception as e:
+    print(f"Error: {e}")
 location_mapping = {
     "Adelaide": -0.057496, "Albany": 1.213567, "Albury": -0.248093, "AliceSprings": -2.172955,
     "Ballarat": 0.590818, "Bendigo": -0.536307, "Brisbane": 0.045406, "Cairns": 1.460609,
