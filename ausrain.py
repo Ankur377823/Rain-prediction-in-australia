@@ -4,7 +4,7 @@ from tensorflow.keras.models import load_model  # For loading Keras model
 
 # Load the trained Keras model
 from keras.models import load_model, save_model
-model = load_model(""C:\Users\ankur\OneDrive\Documents\Autodesk\Projects\ausrain.py"")
+model = load_model("C:\Users\ankur\OneDrive\Documents\Autodesk\Projects\ausrain.py")
 save_model(model, "Ausrain.keras")
 
 # Location and wind direction mappings
