@@ -2,9 +2,9 @@ import streamlit as st
 import pandas as pd
 from tensorflow.keras.models import load_model  # For loading Keras model
 
-# Load the trained Keras model
+
 model = load_model("rainpred1.keras")
-# Location and wind direction mappings
+
 location_mapping = {
     "Adelaide": -0.057496, "Albany": 1.213567, "Albury": -0.248093, "AliceSprings": -2.172955,
     "Ballarat": 0.590818, "Bendigo": -0.536307, "Brisbane": 0.045406, "Cairns": 1.460609,
@@ -123,20 +123,20 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-# Function for predicting rainfall
+l
 def predict_rain(input_data):
     prediction = model.predict(input_data)
-    return "Rain" if prediction[0] == 1 else "No Rain"
+    return "Rain will Happen" if prediction[0] == 1 else "No Rain will happen"
 
-# Streamlit UI
+
 def main():
     st.title("🌧️ Rainfall Prediction in Australia🌦️")
     st.write("Predict if it will rain tomorrow based on today's weather conditions.")
 
-    # Location selection (alphabetically sorted)
+    
     location = st.selectbox("📍 Select Location", sorted(location_mapping.keys()))
     
-    # Weather parameters
+   
     min_temp = st.number_input("🌡️ Min Temp", min_value=-10.0, max_value=50.0, value=15.0)
     max_temp = st.number_input("🌡️ Max Temp", min_value=-10.0, max_value=50.0, value=25.0)
     rainfall = st.number_input("💧 Rainfall", min_value=0.0, max_value=500.0, value=0.0)
@@ -157,7 +157,7 @@ def main():
     temp_9am = st.number_input("🌡️ Temp at 9am", min_value=-10.0, max_value=50.0, value=18.0)
     temp_3pm = st.number_input("🌡️ Temp at 3pm", min_value=-10.0, max_value=50.0, value=22.0)
 
-    # RainToday input
+   
     rain_today = st.selectbox("🌧️ Rain Today (Yes/No)", ["Yes", "No"])
     encoded_rain_today = 1 if rain_today == "Yes" else 0
 
@@ -167,7 +167,7 @@ def main():
     encoded_wind_dir_9am = wind_direction9am.get(wind_dir_9am, 0)
     encoded_wind_dir_3pm = wind_direction3pm.get(wind_dir_3pm, 0)
 
-    # Prepare the input data for prediction
+   
     input_data = pd.DataFrame([{
         'Location': encoded_location,
         'MinTemp': min_temp,
