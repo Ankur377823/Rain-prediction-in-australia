@@ -6,26 +6,38 @@ from tensorflow.keras.models import load_model  # For loading Keras model
 model = load_model("Ausrain.keras")
 # Location and wind direction mappings
 location_mapping = {
-    "Adelaide": -0.057496, "Albany": 1.213567, "Albury": -0.248093, "AliceSprings": -2.172955,
-    "Ballarat": 0.590818, "Bendigo": -0.536307, "Brisbane": 0.045406, "Cairns": 1.460609,
-    "Canberra": -0.564575, "CoffsHarbour": 1.089804, "Dartmoor": 1.365389, "Darwin": 0.746116,
-    "GoldCoast": 0.559938, "Hobart": 0.300210, "Launceston": 0.168789, "Melbourne": -0.312300,
-    "MelbourneAirport": -0.033334, "Mildura": -1.728441, "MountGambier": 1.306208,
-    "MountGinini": 0.786392, "MountSprings": -1.029307, "Newcastle": 0.334721, "NorfolkIsland": 1.349790,
-    "Perth": -0.268199, "PerthAirport": -0.480510, "Penrith": -0.365459, "Richmond": -0.516908,
-    "Sale": -0.085331, "Sydney": 0.618423, "SydneyAirport": 0.595831, "Tuggeranong": -0.504465,
-    "WaggaWagga": -0.641701, "Witchcliffe": 1.141801, "Wollongong": 0.240843, "Williamtown": 0.211052,
-    "Woomera": -2.378405
+    "Adelaide": 0.215471, "Albany":0.296711, "Albury": 0.203289 , "AliceSprings": 0.080263 ,
+    "Ballarat":0.256908,"Badgerysreek":0.193752, "Bendigo": 0.184868, "Brisbane":0.222048, "Cairns": 0.312500,
+    "Canberra": 0.183062 ,"cobar":0.128282,"CoffsHarbour": 0.288800, "Dartmoor": 0.306414, "Darwin":0.266834 ,
+    "GoldCoast":0.254934 , "Hobart": 0.238334, "Katherine":0.167934,"Launceston": 0.229934, "Melbourne": 0.199186,
+    "MelbourneAirport": 0.217016, "Mildura": 0.108674,"More":0.130941, "MountGambier": 0.302632,
+    "MountGinini":0.269408, "MountSprings": -1.029307, "Newcastle": 0.240540,"Nhil":0.153359,"NorahHead":0.268975, "NorfolkIsland": 0.305417,"Nurioopta":0.196743,
+    "Perth": 0.202004, "PerthAirport": 0.188435, "Penrith": 0.195788,"PearceRAAF":0.167830,"Portland":0.363908, "Richmond": 0.186108,
+    "Sale": 0.213692,"SalmonGums":0.157281, "Sydney": 0.258672 , "SydneyAirport": 0.257228,"Townsville":0.170724, "Tuggeranong": 0.186904,"Uluru":0.073511,
+    "WaggaWagga": 0.178132,"Walpole":0.315702, "Watsonia":0.245264,"Witchcliffe":0.292124, "Wollongong": 0.234539 , "Williamtown": 0.232635,
+    "Woomera": 0.067132
 }
+
 
 wind_directiongust = {
-    "N": 1.056246, "NNE": 0.168212, "NE": -0.819096, "ENE": -1.440791, "E": -1.725326,
-    "ESE": -1.348804, "SE": 0.754542, "SSE": -0.687142, "S": 0.020536, "SSW": -0.047826,
-    "SW": -0.429853, "WSW": 0.257421, "W": 0.754542, "WNW": 1.353028, "NW": 1.485132, "NNW": 1.490119
+    "N": 0.263288, "NNE": 0.226176, "NE": 0.186494, "ENE": 0.158934, "E": 0.168673,
+    "ESE": 0.162778, "SE": 0.184009, "SSE": 0.190430, "S": 0.220004, "SSW":0.219348,
+    "SW": 0.201182, "WSW": 0.219899, "W": 0.250679, "WNW": 0.275691, "NW": 0.281212, "NNW": 0.277764
+}
+wind_dir3pm = {
+    "N": 0.272328, "NNE": 0.239302, "NE": 0.184915, "ENE": 0.175894, "E": 0.147043,
+    "ESE": 0.167078, "SE": 0.204699, "SSE": 0.186190, "S":  0.209047, "SSW":0.217147,
+    "SW": 0.193286, "WSW": 0.229904, "W": 0.250049, "WNW": 0.270453, "NW":0.273060, "NNW": 0.281420
+}
+wind_dir9am = {
+    "N": 0.243281, "NNE": 0.262886, "NE": 0.204406, "ENE": 0.174196, "E": 0.143309,
+    "ESE": 0.146527, "SE": 0.160547, "SSE": 0.175702, "S":0.194133, "SSW":0.216818,
+    "SW": 0.226641, "WSW": 0.240888, "W": 0.254995, "WNW": 0.262746, "NW": 0.277933, "NNW": 0.304511
 }
 
-wind_direction9am = {key: value for key, value in wind_directiongust.items()}
-wind_direction3pm = {key: value for key, value in wind_directiongust.items()}
+
+# wind_direction9am = {key: value for key, value in wind_directiongust.items()}
+# wind_direction3pm = {key: value for key, value in wind_directiongust.items()}
 st.markdown("""
     <style>
         /* Body styling */
@@ -144,8 +156,8 @@ def main():
     sunshine = st.number_input("☀️ Sunshine", min_value=0.0, max_value=15.0, value=8.0)
     wind_gust_dir = st.selectbox("🌬️ Wind Gust Direction", list(wind_directiongust.keys()))
     wind_gust_speed = st.number_input("🌬️ Wind Gust Speed", min_value=0.0, max_value=100.0, value=15.0)
-    wind_dir_9am = st.selectbox("🌬️ Wind Direction at 9am", list(wind_direction9am.keys()))
-    wind_dir_3pm = st.selectbox("🌬️ Wind Direction at 3pm", list(wind_direction3pm.keys()))
+    wind_dir_9am = st.selectbox("🌬️ Wind Direction at 9am", list(wind_dir9am.keys()))
+    wind_dir_3pm = st.selectbox("🌬️ Wind Direction at 3pm", list(wind_dir3pm .keys()))
     wind_speed_9am = st.number_input("💨 Wind Speed at 9am", min_value=0.0, max_value=100.0, value=5.0)
     wind_speed_3pm = st.number_input("💨 Wind Speed at 3pm", min_value=0.0, max_value=100.0, value=10.0)
     humidity_9am = st.number_input("💧 Humidity at 9am", min_value=0, max_value=100, value=80)
@@ -164,8 +176,8 @@ def main():
     # Encode location and wind directions
     encoded_location = location_mapping.get(location, 0)
     encoded_wind_gust_dir = wind_directiongust.get(wind_gust_dir, 0)
-    encoded_wind_dir_9am = wind_direction9am.get(wind_dir_9am, 0)
-    encoded_wind_dir_3pm = wind_direction3pm.get(wind_dir_3pm, 0)
+    encoded_wind_dir_9am = wind_dir9am.get(wind_dir_9am, 0)
+    encoded_wind_dir_3pm = wind_dir3pm .get(wind_dir_3pm, 0)
 
     # Prepare the input data for prediction
     input_data = pd.DataFrame([{
