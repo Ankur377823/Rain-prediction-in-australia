@@ -3,7 +3,7 @@ import pandas as pd
 from tensorflow.keras.models import load_model  # For loading Keras model
 
 
-model = load_model("rainpred1.keras")
+model = load_model(r"C:/Users\ankur\Downloads\rainpred1.keras")
 
 
 location_mapping = {
