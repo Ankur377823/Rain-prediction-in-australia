@@ -3,10 +3,7 @@ import pandas as pd
 from tensorflow.keras.models import load_model  # For loading Keras model
 
 # Load the trained Keras model
-from keras.models import load_model, save_model
-model = load_model(r"C:/Users\ankur\OneDrive\Documents\Autodesk\Projects\ausrain.py")
-save_model(model, "Ausrain.keras")
-
+model = load_model("Ausrain.keras")
 # Location and wind direction mappings
 location_mapping = {
     "Adelaide": -0.057496, "Albany": 1.213567, "Albury": -0.248093, "AliceSprings": -2.172955,
