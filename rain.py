@@ -123,7 +123,7 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-l
+
 def predict_rain(input_data):
     prediction = model.predict(input_data)
     return "Rain will Happen" if prediction[0] == 1 else "No Rain will happen"
