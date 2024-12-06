@@ -1,10 +1,10 @@
 import streamlit as st
 import pandas as pd
-from tensorflow.keras.models import load_model  # For loading Keras model
+from tensorflow.keras.models import load_model  
 
-# Load the trained Keras model
+
 model = load_model("Ausrain.keras")
-# Location and wind direction mappings
+
 location_mapping = {
     "Adelaide": 0.215471, "Albany":0.296711, "Albury": 0.203289 , "AliceSprings": 0.080263 ,
     "Ballarat":0.256908,"Badgerysreek":0.193752, "Bendigo": 0.184868, "Brisbane":0.222048, "Cairns": 0.312500,
@@ -36,8 +36,7 @@ wind_dir9am = {
 }
 
 
-# wind_direction9am = {key: value for key, value in wind_directiongust.items()}
-# wind_direction3pm = {key: value for key, value in wind_directiongust.items()}
+
 st.markdown("""
     <style>
         /* Body styling */
@@ -135,20 +134,19 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-# Function for predicting rainfall
 def predict_rain(input_data):
     prediction = model.predict(input_data)
     return "Rain" if prediction[0] == 1 else "No Rain"
 
-# Streamlit UI
+
 def main():
     st.title("🌧️ Rainfall Prediction in Australia🌦️")
     st.write("Predict if it will rain tomorrow based on today's weather conditions.")
 
-    # Location selection (alphabetically sorted)
+    
     location = st.selectbox("📍 Select Location", sorted(location_mapping.keys()))
     
-    # Weather parameters
+    
     min_temp = st.number_input("🌡️ Min Temp", min_value=-10.0, max_value=50.0, value=15.0)
     max_temp = st.number_input("🌡️ Max Temp", min_value=-10.0, max_value=50.0, value=25.0)
     rainfall = st.number_input("💧 Rainfall", min_value=0.0, max_value=500.0, value=0.0)
@@ -169,17 +167,17 @@ def main():
     temp_9am = st.number_input("🌡️ Temp at 9am", min_value=-10.0, max_value=50.0, value=18.0)
     temp_3pm = st.number_input("🌡️ Temp at 3pm", min_value=-10.0, max_value=50.0, value=22.0)
 
-    # RainToday input
+    
     rain_today = st.selectbox("🌧️ Rain Today (Yes/No)", ["Yes", "No"])
     encoded_rain_today = 1 if rain_today == "Yes" else 0
 
-    # Encode location and wind directions
+    
     encoded_location = location_mapping.get(location, 0)
     encoded_wind_gust_dir = wind_directiongust.get(wind_gust_dir, 0)
     encoded_wind_dir_9am = wind_dir9am.get(wind_dir_9am, 0)
     encoded_wind_dir_3pm = wind_dir3pm .get(wind_dir_3pm, 0)
 
-    # Prepare the input data for prediction
+    
     input_data = pd.DataFrame([{
         'Location': encoded_location,
         'MinTemp': min_temp,
@@ -204,7 +202,7 @@ def main():
         'RainToday': encoded_rain_today
     }])
 
-    # Predict rainfall
+
     if st.button("Predict"):
         prediction = predict_rain(input_data)
         st.success(f"The prediction is: {prediction}")
